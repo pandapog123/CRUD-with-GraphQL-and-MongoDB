@@ -1,5 +1,4 @@
 const { MongoClient, ObjectId } = require("mongodb");
-
 const client = new MongoClient("mongodb://localhost:27017");
 
 module.exports.initDatabase = async function initDatabase() {
@@ -20,6 +19,7 @@ module.exports.initDatabase = async function initDatabase() {
 
     async function createUser(name, birthday, email, todos) {
       const userId = new ObjectId().toString();
+
       const createdUser = {
         id: userId,
         name,
@@ -37,15 +37,13 @@ module.exports.initDatabase = async function initDatabase() {
       let userData = await findUserById(userId);
 
       if (userData == null) {
-        return;
+        return false;
       }
 
       let updateOperation = {
         $set: {
           todos: userData.todos.map((todo) =>
-            todo.id === todoId
-              ? { ...todo, checked: !todo.checked }
-              : { ...todo }
+            todo.id === todoId ? { ...todo, checked: !todo.checked } : todo
           ),
         },
       };
@@ -68,7 +66,7 @@ module.exports.initDatabase = async function initDatabase() {
       let userData = await findUserById(userId);
 
       if (userData == null) {
-        return;
+        return false;
       }
 
       let deleteOperation = {
@@ -82,7 +80,7 @@ module.exports.initDatabase = async function initDatabase() {
         deleteOperation
       );
 
-      return deleteResult.modifiedCount == 1;
+      return deleteResult.acknowledged;
     }
 
     return {

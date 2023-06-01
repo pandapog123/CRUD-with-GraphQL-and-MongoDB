@@ -1,4 +1,5 @@
 const { ApolloServer } = require("apollo-server");
+
 const { initGraphql } = require("./graphql");
 
 async function main() {
@@ -11,9 +12,9 @@ async function main() {
 
   const port = 3000;
 
-  server.listen(port).then(() => {
-    console.log(`Go to http://localhost:${port}/graphql`);
-  });
+  await server.listen(port);
+
+  console.log(`Go to http://localhost:${port}/graphql`);
 }
 
 main();

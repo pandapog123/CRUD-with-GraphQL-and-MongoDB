@@ -65,13 +65,13 @@ module.exports.initGraphql = async function initGraphql() {
           return "An error occured";
         }
 
-        return `Created user with ID ${createResult.userId}`;
+        return `Created USer with ID ${createResult.userId}`;
       },
       checkTodo: async (_, { userId, todoId }) => {
         let updateResult = await databaseActions.checkTodo(userId, todoId);
 
         if (!updateResult) {
-          return "An error occured";
+          return "An error occurred";
         }
 
         return `Checked todo of ID ${todoId} of user with ID ${userId}`;
@@ -80,7 +80,7 @@ module.exports.initGraphql = async function initGraphql() {
         let deleteResult = await databaseActions.deleteUserById(userId);
 
         if (!deleteResult) {
-          return "An error occured";
+          return "An error occurred";
         }
 
         return `Deleted user with ID ${userId}`;
@@ -89,7 +89,7 @@ module.exports.initGraphql = async function initGraphql() {
         let deleteResult = await databaseActions.deleteAllCheckedTodos(userId);
 
         if (!deleteResult) {
-          return "An error occured";
+          return "An error occurred";
         }
 
         return `Deleted all checked todos in user with ID ${userId}`;
